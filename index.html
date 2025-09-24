@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth scroll-pt-20">
+
+<head>
+    <meta name="color-scheme" content="light dark">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <title>CI Translation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            /* 合并边框 */
+            border-top: 1px solid #ffffff;
+            margin: 10px auto;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid #e9eaeb;
+            /* 只显示下边框 */
+            padding: 8px;
+            text-align: center;
+            color: #e9eaeb
+        }
+
+        thead th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        !function () {
+            try {
+                var d = document.documentElement,
+                    c = d.classList;
+                c.remove('light', 'dark');
+                var e = localStorage.getItem('theme');
+
+                if (!e) {
+                    // default to dark
+                    d.style.colorScheme = 'dark';
+                    c.add('dark');
+                } else if (e === 'system') {
+                    // follow system
+                    var t = '(prefers-color-scheme: dark)',
+                        m = window.matchMedia(t);
+                    if (m.matches) {
+                        d.style.colorScheme = 'dark';
+                        c.add('dark');
+                    } else {
+                        d.style.colorScheme = 'light';
+                        c.add('light');
+                    }
+                } else if (e === 'light' || e === 'dark') {
+                    // chosen by user
+                    d.style.colorScheme = e;
+                    c.add(e);
+                }
+            } catch (e) { }
+        }()
+    </script>
+    <nav
+        class="flex items-center justify-between py-3 px-4 sm:px-8 sticky top-0 bg-[var(--background-nav)] h-16 z-50 backdrop-blur">
+        <a href="/" class="flex items-center space-x-1.5">
+            <svg width="187" height="24" viewBox="0 0 187 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="fill-black dark:fill-white hover:text-primary">
+                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="currentColor">CI Translation</text>
+            </svg>
+        </a>
+        <div class="flex">
+            <div class="deskNav">
+                <div class="flex items-center space-x-1 sm:space-x-2 mx-3 sm:mx-4 ">
+                    <button
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-10 hover:bg-transparent text-primary w-8 group"
+                        type="button" id="radix-:R1b6cq:" aria-haspopup="menu" aria-expanded="false"
+                        data-state="closed">
+                        <div class="relative flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class=" h-4 w-4  rotate-0 scale-100  dark:-rotate-90 dark:scale-0  stroke-current          /* base stroke color pulled from current text color */ stroke-[2px]           /* base stroke width (arbitrary value in Tailwind 3.2+) */ group-hover:stroke-[3px]  /* hover stroke width */ transition-all         /* so it transitions smoothly if desired */ ">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M12 2v2"></path>
+                                <path d="M12 20v2"></path>
+                                <path d="m4.93 4.93 1.41 1.41"></path>
+                                <path d="m17.66 17.66 1.41 1.41"></path>
+                                <path d="M2 12h2"></path>
+                                <path d="M20 12h2"></path>
+                                <path d="m6.34 17.66-1.41 1.41"></path>
+                                <path d="m19.07 4.93-1.41 1.41"></path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class=" absolute  h-4 w-4  rotate-90 scale-0  dark:rotate-0 dark:scale-100  stroke-current stroke-[2px] group-hover:stroke-[3px] transition-all ">
+                                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                            </svg>
+                        </div>
+                        <span class="sr-only">Toggle theme</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <div class="flex flex-col items-center pt-8 pb-32  px-4 sm:px-8">
+        <div class="w-full">
+            <div class="w-full">
+                <div class="mx-auto max-w-5xl px-4 sm:px-8">
+                    <div class="mb-12 mt-4">
+                        <h3 class="text-sm text-gray-500 mb-2 sm:mb-8 text-center">September 8, 2025</h3>
+                        <h1 class="text-xl sm:text-4xl font-bold mb-12 sm:mb-16 text-center"> CI Translation
+                        </h1>
+                    </div>
+                </div>
+                <div id="content" class="w-full">
+                    <div class="w-full px-6 lg:px-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-[clamp(2rem,20vw,10rem)_minmax(0,1fr)] ">
+                            <aside class="hidden lg:block">
+                                <nav aria-label="On this page"
+                                    class="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pr-4 text-sm ">
+                                    <ul class="space-y-1">
+                                        <li>
+                                            <a href="#1-guidelines"
+                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
+                                                <span class="">1. Guidelines</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#2-Results"
+                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
+                                                <span class="">2. Results</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#3-Data_Set"
+                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
+                                                <span class="">3. Data set</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </aside>
+                            <div
+                                class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[clamp(80ch,80vw,100ch)] px-4 sm:px-8">
+                                <div class="flex flex-col space-y-6">
+                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
+                                        <h1 class="group relative cursor-pointer scroll-mt-24 mb-6" id="1-guidelines">
+                                            <a class="heading-link text-3xl" href="#1-guidelines">1. Guidelines</a>
+                                            <button
+                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
+                                                aria-label="Copy link to clipboard">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="w-4 h-4">
+                                                    <path
+                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
+                                                    </path>
+                                                    <path
+                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                            <div id="_rht_toaster"
+                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
+                                            </div>
+                                        </h1>
+                                        <p>Below, we share the Guideline-Enhanced prompt that we used in the article.
+                                        </p>
+                                    </article>
+                                    <div>
+                                        <div class="relative">
+                                            <div
+                                                class="[&amp;&gt;*]:rounded-md [&amp;&gt;*]:p-4 [&amp;&gt;*]:text-xs [&amp;&gt;*]:overflow-x-auto [&amp;&gt;*]:rounded-b-none">
+                                                <pre class="shiki github-dark" style="background-color: #24292e"
+                                                    tabindex="0">
+                                                    <code>
+<span class="line"><span style="color: #9ECBFF">- Syntax:</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure YAML file follows proper syntax, including required symbols, e.g., colons, hyphens, or quotation marks.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Verify that GitHub Actions YAML file follows proper indentation and structural conventions.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all used definitions are correctly defined and properly placed.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure the value types match their expected format, e.g., the setup-python action expects a single version value, not a list.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #9ECBFF">- Platform Discrepancy:</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all Travis CI keys are translated to GitHub Actions keys. Travis CI specific keys , e.g., notification and allow_failure, may be discarded.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Verify that all expressions are properly converted to GitHub Actions syntax, e.g., 'env: TOX_ENV=flake8' to 'TOX_ENV: flake8'.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Retain only x64 and arm64; remove all other architectures.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all version numbers are in string format, e.g., Python '3.10'.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Explicitly configure fields that are implicitly defaulted in Travis CI, e.g., actions/checkout@v2, actions/setup-python@v2, and test environment setup.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all referenced dependencies are present.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #9ECBFF">- Environment:</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all actions are currently supported, e.g., actions/cache v3 or higher.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all required tokens are properly configured, e.g., set GITHUB_TOKEN in coveralls step.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #9ECBFF">- Logic:</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all trigger events are correctly translated, e.g., avoid using tags as the sole trigger event.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all execution orders are correctly translated, e.g., deploy job should be configured with the `needs` parameter to execute after test job.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure conditional statements are correctly translated.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure that all transferable steps have been migrated.</span></span>
+<span class="line"><span style="color: #9ECBFF">    - Ensure all tasks are translated without introducing additional or unrelated tasks.</span></span>
+
+                                                    </code>
+                                                </pre>
+                                            </div>
+                                            <button
+                                                class="rounded p-1.5 hover:bg-muted/10 transition-all absolute top-2 right-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="h-5 w-5 stroke-1 stroke-gray-200">
+                                                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                                                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
+                                        <h1 class="group relative cursor-pointer scroll-mt-24 " id="2-Results">
+                                            <a class="heading-link text-3xl" href="#2-Results">2. Results</a>
+                                            <button
+                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
+                                                aria-label="Copy link to clipboard">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="w-4 h-4">
+                                                    <path
+                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
+                                                    </path>
+                                                    <path
+                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                            <div id="_rht_toaster"
+                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
+                                            </div>
+                                        </h1>
+                                    </article>
+                                    <div>
+                                        <div class="relative">
+                                            <div class="[&amp;&gt;*]:rounded-md [&amp;&gt;*]:p-4 [&amp;&gt;*]:text-xs [&amp;&gt;*]:overflow-x-auto [&amp;&gt;*]:rounded-b-none"
+                                                style="background-color: #24292e">
+                                                <table border="1">
+                                                    <tr>
+                                                        <th>Metric</th>
+                                                        <td>1</td>
+                                                        <td>2</td>
+                                                        <td>3</td>
+                                                        <td>4</td>
+                                                        <td>5</td>
+                                                        <td>6</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>BSR</th>
+                                                        <td>18.3%</td>
+                                                        <td>25.8%</td>
+                                                        <td>21.0%</td>
+                                                        <td>40.2%</td>
+                                                        <td>68.6%</td>
+                                                        <td>75.5%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>CS</th>
+                                                        <td>57.7%</td>
+                                                        <td>72.4%</td>
+                                                        <td>70.7%</td>
+                                                        <td>73.3%</td>
+                                                        <td>72.5%</td>
+                                                        <td>71.7%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>CB</th>
+                                                        <td>6.1%</td>
+                                                        <td>29.0%</td>
+                                                        <td>26.2%</td>
+                                                        <td>28.2%</td>
+                                                        <td>27.9%</td>
+                                                        <td>27.1%</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
+                                        <h1 class="group relative cursor-pointer scroll-mt-24 mb-6" id="3-Data_Set">
+                                            <a class="heading-link text-3xl" href="#3-Data_Set">3. Data Set</a>
+                                            <button
+                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
+                                                aria-label="Copy link to clipboard">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="w-4 h-4">
+                                                    <path
+                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
+                                                    </path>
+                                                    <path
+                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                            <div id="_rht_toaster"
+                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
+                                            </div>
+                                        </h1>
+                                        <p>
+                                            Our data set consists of 229 GitHub repositories.
+                                        </p>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const themeButton = document.querySelector('#radix-\\:R1b6cq\\:'); // 
+
+        themeButton.addEventListener('click', () => {
+            const d = document.documentElement;
+            const c = d.classList;
+
+            if (c.contains('dark')) {
+                // dark to light
+                c.remove('dark');
+                c.add('light');
+                d.style.colorScheme = 'light';
+                localStorage.setItem('theme', 'light');
+            } else {
+                // light to dark
+                c.remove('light');
+                c.add('dark');
+                d.style.colorScheme = 'dark';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
