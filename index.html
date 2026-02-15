@@ -68,7 +68,8 @@
         <a href="/" class="flex items-center space-x-1.5">
             <svg width="187" height="24" viewBox="0 0 187 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="fill-black dark:fill-white hover:text-primary">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="currentColor">CI Translation</text>
+                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="16"
+                    fill="currentColor">CI Translation</text>
             </svg>
         </a>
         <div class="flex">
@@ -113,7 +114,8 @@
                 <div class="mx-auto max-w-5xl px-4 sm:px-8">
                     <div class="mb-12 mt-4">
                         <h3 class="text-sm text-gray-500 mb-2 sm:mb-8 text-center">September 8, 2025</h3>
-                        <h1 class="text-xl sm:text-4xl font-bold mb-12 sm:mb-16 text-center"> CI Configuration Translation
+                        <h1 class="text-xl sm:text-4xl font-bold mb-12 sm:mb-16 text-center"> CI Configuration
+                            Translation
                         </h1>
                     </div>
                 </div>
@@ -137,9 +139,15 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#3-Data_Set"
+                                            <a href="#3-IterativeRefinement"
                                                 class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
-                                                <span class="">3. Data set</span>
+                                                <span class="">3. Iterative Refinement</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#4-Data_Set"
+                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
+                                                <span class="">4. Data set</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -260,8 +268,8 @@
                                                     </tr>
                                                     <tr>
                                                         <th>BSR</th>
-                                                        <td>31.5.0%</td>
-                                                        <td>63.0.8%</td>
+                                                        <td>31.5%</td>
+                                                        <td>63.0%</td>
                                                         <td>57.0%</td>
                                                         <td>71.5%</td>
                                                         <td>83.5%</td>
@@ -281,8 +289,67 @@
                                         </div>
                                     </div>
                                     <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
-                                        <h1 class="group relative cursor-pointer scroll-mt-24 mb-6" id="3-Data_Set">
-                                            <a class="heading-link text-3xl" href="#3-Data_Set">3. Data Set</a>
+                                        <h1 class="group relative cursor-pointer scroll-mt-24 " id="3-IterativeRefinement">
+                                            <a class="heading-link text-3xl" href="#3-IterativeRefinement">3. IterativeRefinement</a>
+                                            <button
+                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
+                                                aria-label="Copy link to clipboard">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="w-4 h-4">
+                                                    <path
+                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
+                                                    </path>
+                                                    <path
+                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                            <div id="_rht_toaster"
+                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
+                                            </div>
+                                        </h1>
+                                    </article>
+                                    <div>
+                                        <div class="relative">
+                                            <div class="[&amp;&gt;*]:rounded-md [&amp;&gt;*]:p-4 [&amp;&gt;*]:text-xs [&amp;&gt;*]:overflow-x-auto [&amp;&gt;*]:rounded-b-none"
+                                                style="background-color: #24292e">
+                                                <table border="1">
+                                                    <tr>
+                                                        <th>Strategies</th>
+                                                        <td>0</td>
+                                                        <td>1</td>
+                                                        <td>2</td>
+                                                        <td>3</td>
+                                                        <td>4</td>
+                                                        <td>5</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>IR</th>
+                                                        <td>126</td>
+                                                        <td>155</td>
+                                                        <td>164</td>
+                                                        <td>167</td>
+                                                        <td>167</td>
+                                                        <td>167</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Guideline+IR</th>
+                                                        <td>143</td>
+                                                        <td>165</td>
+                                                        <td>170</td>
+                                                        <td>176</td>
+                                                        <td>177</td>
+                                                        <td>177</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
+                                        <h1 class="group relative cursor-pointer scroll-mt-24 mb-6" id="4-Data_Set">
+                                            <a class="heading-link text-3xl" href="#4-Data_Set">4. Data Set</a>
                                             <button
                                                 class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
                                                 aria-label="Copy link to clipboard">
