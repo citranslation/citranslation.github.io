@@ -1,412 +1,327 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth scroll-pt-20">
+<html lang="en" class="scroll-smooth">
 
 <head>
-    <meta name="color-scheme" content="light dark">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8">
-    <title>CI Translation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>CI Configuration Translation</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'monospace']
+                    },
+                    colors: {
+                        ink: '#172033',
+                        muted: '#607087',
+                        paper: '#f7f9fc',
+                        line: '#dbe3ee',
+                        accent: '#0f8b8d',
+                        coral: '#ee6c4d'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            /* 合并边框 */
-            border-top: 1px solid #ffffff;
-            margin: 10px auto;
+        :root {
+            color-scheme: light;
         }
 
-        th,
-        td {
-            border-bottom: 1px solid #e9eaeb;
-            /* 只显示下边框 */
-            padding: 8px;
-            text-align: center;
-            color: #e9eaeb
+        html.dark {
+            color-scheme: dark;
         }
 
-        thead th {
-            background-color: #f4f4f4;
+        body {
+            background:
+                radial-gradient(circle at 15% 0%, rgba(15, 139, 141, 0.16), transparent 34rem),
+                radial-gradient(circle at 92% 12%, rgba(238, 108, 77, 0.13), transparent 30rem),
+                #f7f9fc;
+        }
+
+        html.dark body {
+            background:
+                radial-gradient(circle at 14% 0%, rgba(15, 139, 141, 0.22), transparent 34rem),
+                radial-gradient(circle at 92% 12%, rgba(238, 108, 77, 0.13), transparent 30rem),
+                #0e1420;
+        }
+
+        .code-block {
+            scrollbar-color: rgba(148, 163, 184, 0.7) transparent;
         }
     </style>
+    <script>
+        (function () {
+            try {
+                var root = document.documentElement;
+                var theme = localStorage.getItem('theme') || 'dark';
+                root.classList.toggle('dark', theme === 'dark');
+            } catch (error) { }
+        })();
+    </script>
 </head>
 
-<body>
-    <script>
-        !function () {
-            try {
-                var d = document.documentElement,
-                    c = d.classList;
-                c.remove('light', 'dark');
-                var e = localStorage.getItem('theme');
+<body class="min-h-screen text-ink antialiased dark:text-slate-100">
+    <header class="sticky top-0 z-50 border-b border-line/80 bg-white/78 backdrop-blur-xl dark:border-white/10 dark:bg-[#0e1420]/78">
+        <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <a href="#" class="flex items-center gap-3 font-semibold tracking-tight">
+                <span class="grid h-9 w-9 place-items-center rounded-lg bg-accent text-sm font-bold text-white shadow-sm">CI</span>
+                <span>CI Translation</span>
+            </a>
+            <div class="flex items-center gap-2">
+                <a href="#4-Data_Set" class="hidden rounded-md px-3 py-2 text-sm font-medium text-muted transition hover:bg-slate-100 hover:text-ink dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white sm:inline-flex">
+                    Dataset
+                </a>
+                <button id="theme-toggle" class="grid h-10 w-10 place-items-center rounded-md border border-line bg-white text-ink transition hover:border-accent hover:text-accent dark:border-white/10 dark:bg-white/5 dark:text-slate-200" type="button" aria-label="Toggle theme">
+                    <svg class="h-5 w-5 dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m0 13.5V21m8.25-9h-2.25M6 12H3.75m14.03-5.78-1.59 1.59M7.81 16.19l-1.59 1.59m11.56 0-1.59-1.59M7.81 7.81 6.22 6.22M15.75 12A3.75 3.75 0 1 1 8.25 12a3.75 3.75 0 0 1 7.5 0Z" />
+                    </svg>
+                    <svg class="hidden h-5 w-5 dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 15.5A9.75 9.75 0 0 1 8.5 2.25 7.5 7.5 0 1 0 21.75 15.5Z" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-                if (!e) {
-                    // default to dark
-                    d.style.colorScheme = 'dark';
-                    c.add('dark');
-                } else if (e === 'system') {
-                    // follow system
-                    var t = '(prefers-color-scheme: dark)',
-                        m = window.matchMedia(t);
-                    if (m.matches) {
-                        d.style.colorScheme = 'dark';
-                        c.add('dark');
-                    } else {
-                        d.style.colorScheme = 'light';
-                        c.add('light');
-                    }
-                } else if (e === 'light' || e === 'dark') {
-                    // chosen by user
-                    d.style.colorScheme = e;
-                    c.add(e);
-                }
-            } catch (e) { }
-        }()
-    </script>
-    <nav
-        class="flex items-center justify-between py-3 px-4 sm:px-8 sticky top-0 bg-[var(--background-nav)] h-16 z-50 backdrop-blur">
-        <a href="/" class="flex items-center space-x-1.5">
-            <svg width="187" height="24" viewBox="0 0 187 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                class="fill-black dark:fill-white hover:text-primary">
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="16"
-                    fill="currentColor">CI Translation</text>
-            </svg>
-        </a>
-        <div class="flex">
-            <div class="deskNav">
-                <div class="flex items-center space-x-1 sm:space-x-2 mx-3 sm:mx-4 ">
-                    <button
-                        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-10 hover:bg-transparent text-primary w-8 group"
-                        type="button" id="radix-:R1b6cq:" aria-haspopup="menu" aria-expanded="false"
-                        data-state="closed">
-                        <div class="relative flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class=" h-4 w-4  rotate-0 scale-100  dark:-rotate-90 dark:scale-0  stroke-current          /* base stroke color pulled from current text color */ stroke-[2px]           /* base stroke width (arbitrary value in Tailwind 3.2+) */ group-hover:stroke-[3px]  /* hover stroke width */ transition-all         /* so it transitions smoothly if desired */ ">
-                                <circle cx="12" cy="12" r="4"></circle>
-                                <path d="M12 2v2"></path>
-                                <path d="M12 20v2"></path>
-                                <path d="m4.93 4.93 1.41 1.41"></path>
-                                <path d="m17.66 17.66 1.41 1.41"></path>
-                                <path d="M2 12h2"></path>
-                                <path d="M20 12h2"></path>
-                                <path d="m6.34 17.66-1.41 1.41"></path>
-                                <path d="m19.07 4.93-1.41 1.41"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class=" absolute  h-4 w-4  rotate-90 scale-0  dark:rotate-0 dark:scale-100  stroke-current stroke-[2px] group-hover:stroke-[3px] transition-all ">
-                                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                            </svg>
-                        </div>
-                        <span class="sr-only">Toggle theme</span>
-                    </button>
+    <main>
+        <section class="mx-auto grid max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_22rem] lg:px-8 lg:pb-20">
+            <div class="max-w-4xl">
+                <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-accent">September 8, 2025</p>
+                <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-ink dark:text-white sm:text-6xl">
+                    CI Configuration Translation
+                </h1>
+                <p class="mt-6 max-w-2xl text-lg leading-8 text-muted dark:text-slate-300">
+                    A compact research companion for translating Travis CI configurations into GitHub Actions, including the guideline-enhanced prompt, evaluation results, iterative refinement behavior, and dataset access.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="#2-Results" class="inline-flex items-center rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0c7779]">
+                        View Results
+                    </a>
+                    <a href="https://anonymous.4open.science/r/citranslation-4BC1" target="_blank" rel="noreferrer" class="inline-flex items-center rounded-md border border-line bg-white px-4 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-accent dark:border-white/10 dark:bg-white/5 dark:text-white">
+                        Open Dataset
+                    </a>
                 </div>
             </div>
-
-        </div>
-    </nav>
-    <div class="flex flex-col items-center pt-8 pb-32  px-4 sm:px-8">
-        <div class="w-full">
-            <div class="w-full">
-                <div class="mx-auto max-w-5xl px-4 sm:px-8">
-                    <div class="mb-12 mt-4">
-                        <h3 class="text-sm text-gray-500 mb-2 sm:mb-8 text-center">September 8, 2025</h3>
-                        <h1 class="text-xl sm:text-4xl font-bold mb-12 sm:mb-16 text-center"> CI Configuration
-                            Translation
-                        </h1>
-                    </div>
+            <div class="grid content-start gap-4 sm:grid-cols-3 lg:grid-cols-1">
+                <div class="rounded-lg border border-line bg-white/84 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.06]">
+                    <p class="text-sm text-muted dark:text-slate-400">Best BSR</p>
+                    <p class="mt-2 text-3xl font-semibold text-ink dark:text-white">88.5%</p>
+                    <p class="mt-1 text-sm text-muted dark:text-slate-400">Guideline + IR</p>
                 </div>
-                <div id="content" class="w-full">
-                    <div class="w-full px-6 lg:px-8">
-                        <div class="grid grid-cols-1 lg:grid-cols-[clamp(2rem,20vw,10rem)_minmax(0,1fr)] ">
-                            <aside class="hidden lg:block">
-                                <nav aria-label="On this page"
-                                    class="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto pr-4 text-sm ">
-                                    <ul class="space-y-1">
-                                        <li>
-                                            <a href="#1-guidelines"
-                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
-                                                <span class="">1. Guidelines</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#2-Results"
-                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
-                                                <span class="">2. Results</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#3-IterativeRefinement"
-                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
-                                                <span class="">3. Iterative Refinement</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#4-Data_Set"
-                                                class="block w-full text-left text-sm font-medium py-1 px-2 rounded hover:bg-muted/40">
-                                                <span class="">4. Data set</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </aside>
-                            <div
-                                class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[clamp(80ch,80vw,100ch)] px-4 sm:px-8">
-                                <div class="flex flex-col space-y-6">
-                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
-                                        <h1 class="group relative cursor-pointer scroll-mt-24 mb-6" id="1-guidelines">
-                                            <a class="heading-link text-3xl" href="#1-guidelines">1. Guidelines</a>
-                                            <button
-                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
-                                                aria-label="Copy link to clipboard">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-4 h-4">
-                                                    <path
-                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
-                                                    </path>
-                                                    <path
-                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                            <div id="_rht_toaster"
-                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
-                                            </div>
-                                        </h1>
-                                        <p>Below, we share the Guideline-Enhanced prompt that we used in the article.
-                                        </p>
-                                    </article>
-                                    <div>
-                                        <div class="relative">
-                                            <div
-                                                class="[&amp;&gt;*]:rounded-md [&amp;&gt;*]:p-4 [&amp;&gt;*]:text-xs [&amp;&gt;*]:overflow-x-auto [&amp;&gt;*]:rounded-b-none">
-                                                <pre class="shiki github-dark" style="background-color: #24292e"
-                                                    tabindex="0">
-                                                    <code>
-<span class="line"><span style="color: #9ECBFF">- Syntax:</span></span>
-<span class="line"><span style="color: #9ECBFF">    - nsure YAML file follows proper syntax, including required symbols, e.g., colons, hyphens, or quotation marks.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Verify that GitHub Actions YAML file follows proper indentation and structural conventions.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure all used definitions are correctly defined and properly placed.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure the value types match their expected format when such fields exist in the source configuration, e.g., the setup-python action expects a single version value, not a list.</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #9ECBFF">- Platform Discrepancy:</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Translate Travis CI keys only when a clear, direct GitHub Actions equivalent exists. Skip any Travis CI–specific or unsupported keys.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Verify that all expressions are properly converted to GitHub Actions syntax, e.g., 'env: TOX_ENV=flake8' to 'TOX_ENV: flake8'.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Retain only x64 and arm64 if architectures are explicitly defined; remove all other architectures.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure all version numbers are in string format, e.g., Python '3.10'.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Explicitly configure fields that are implicitly defaulted in Travis CI as equivalent GitHub Actions steps, e.g., actions/checkout@v4 and language runtime setup.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure all packages are properly installed and configured when present in the Travis CI configuration, e.g., migrate tox-travis to tox-gh-actions if applicable.</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #9ECBFF">- Environment:</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure all referenced GitHub Actions currently exist; avoid non-existent actions.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure all required tokens are properly configured for the migrated steps, e.g., set GITHUB_TOKEN in the coveralls step if such a step exists.</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #9ECBFF">- Logic:</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure all trigger events are correctly translated, e.g., avoid using tags as the sole trigger event unless the Travis CI configuration explicitly relies on tag-only builds.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure all execution orders are correctly translated, e.g., deploy job should be configured with the `needs` parameter to execute after test job.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure conditional statements are correctly translated.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Do not introduce extra jobs, steps, operating systems, or matrix dimensions beyond those implied by the Travis CI configuration, except where required to faithfully reproduce Travis CI default behavior.</span></span>
-<span class="line"><span style="color: #9ECBFF">    - Ensure that all transferable steps have been migrated.</span></span>
+                <div class="rounded-lg border border-line bg-white/84 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.06]">
+                    <p class="text-sm text-muted dark:text-slate-400">Best LMR</p>
+                    <p class="mt-2 text-3xl font-semibold text-ink dark:text-white">97.2%</p>
+                    <p class="mt-1 text-sm text-muted dark:text-slate-400">Guideline + IR</p>
+                </div>
+                <div class="rounded-lg border border-line bg-white/84 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.06]">
+                    <p class="text-sm text-muted dark:text-slate-400">Repositories</p>
+                    <p class="mt-2 text-3xl font-semibold text-ink dark:text-white">200</p>
+                    <p class="mt-1 text-sm text-muted dark:text-slate-400">Public benchmark dataset</p>
+                </div>
+            </div>
+        </section>
 
-                                                    </code>
-                                                </pre>
-                                            </div>
-                                            <button
-                                                class="rounded p-1.5 hover:bg-muted/10 transition-all absolute top-2 right-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="h-5 w-5 stroke-1 stroke-gray-200">
-                                                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-                                                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
-                                        <h1 class="group relative cursor-pointer scroll-mt-24 " id="2-Results">
-                                            <a class="heading-link text-3xl" href="#2-Results">2. Results</a>
-                                            <button
-                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
-                                                aria-label="Copy link to clipboard">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-4 h-4">
-                                                    <path
-                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
-                                                    </path>
-                                                    <path
-                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                            <div id="_rht_toaster"
-                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
-                                            </div>
-                                        </h1>
-                                    </article>
-                                    <div>
-                                        <div class="relative">
-                                            <div class="[&amp;&gt;*]:rounded-md [&amp;&gt;*]:p-4 [&amp;&gt;*]:text-xs [&amp;&gt;*]:overflow-x-auto [&amp;&gt;*]:rounded-b-none"
-                                                style="background-color: #24292e">
-                                                <table border="1">
-                                                    <tr>
-                                                        <th>Metric</th>
-                                                        <td>Importer</td>
-                                                        <td>Basic</td>
-                                                        <td>One-shot</td>
-                                                        <td>Guideline</td>
-                                                        <td>IR</td>
-                                                        <td>Guideline+IR</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>BSR</th>
-                                                        <td>31.5%</td>
-                                                        <td>63.0%</td>
-                                                        <td>57.0%</td>
-                                                        <td>71.5%</td>
-                                                        <td>83.5%</td>
-                                                        <td>88.5%</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>LMR</th>
-                                                        <td>92.5%</td>
-                                                        <td>96.0%</td>
-                                                        <td>95.6%</td>
-                                                        <td>95.8%</td>
-                                                        <td>96.5%</td>
-                                                        <td>97.2%</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
-                                        <h1 class="group relative cursor-pointer scroll-mt-24 " id="3-IterativeRefinement">
-                                            <a class="heading-link text-3xl" href="#3-IterativeRefinement">3. Iterative Refinement</a>
-                                            <button
-                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
-                                                aria-label="Copy link to clipboard">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-4 h-4">
-                                                    <path
-                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
-                                                    </path>
-                                                    <path
-                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                            <div id="_rht_toaster"
-                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
-                                            </div>
-                                        </h1>
-                                    </article>
-                                    <div>
-                                        <div class="relative">
-                                            <div class="[&amp;&gt;*]:rounded-md [&amp;&gt;*]:p-4 [&amp;&gt;*]:text-xs [&amp;&gt;*]:overflow-x-auto [&amp;&gt;*]:rounded-b-none"
-                                                style="background-color: #24292e">
-                                                <table border="1">
-                                                    <tr>
-                                                        <th>Strategies</th>
-                                                        <td>0</td>
-                                                        <td>1</td>
-                                                        <td>2</td>
-                                                        <td>3</td>
-                                                        <td>4</td>
-                                                        <td>5</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>IR</th>
-                                                        <td>126</td>
-                                                        <td>155</td>
-                                                        <td>164</td>
-                                                        <td>167</td>
-                                                        <td>167</td>
-                                                        <td>167</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Guideline+IR</th>
-                                                        <td>143</td>
-                                                        <td>165</td>
-                                                        <td>170</td>
-                                                        <td>176</td>
-                                                        <td>177</td>
-                                                        <td>177</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <article class="prose prose-sm sm:prose-base max-w-none dark:prose-invert">
-                                        <h1 class="group relative cursor-pointer scroll-mt-24 mb-6" id="4-Data_Set">
-                                            <a class="heading-link text-3xl" href="#4-Data_Set">4. Data Set</a>
-                                            <button
-                                                class=" absolute  top-1/2  -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out text-[var(--oai-green)] hover:text-[var(--oai-green-hover)] p-1 pl-3 pointer-events-none group-hover:pointer-events-auto "
-                                                aria-label="Copy link to clipboard">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-4 h-4">
-                                                    <path
-                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
-                                                    </path>
-                                                    <path
-                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                            <div id="_rht_toaster"
-                                                style="position:fixed;z-index:9999;top:16px;left:16px;right:16px;bottom:16px;pointer-events:none">
-                                            </div>
-                                        </h1>
-                                        <p>
-                                            Our dataset comprises 200 GitHub repositories, and the source code is
-                                            publicly available on
-                                            <a href="https://anonymous.4open.science/r/citranslation-4BC1" target="_blank"
-                                                style="color: #007bff; text-decoration: none;">citranslation</a>.
-                                        </p>
-                                    </article>
-                                </div>
+        <section id="content" class="border-t border-line/80 bg-white/72 dark:border-white/10 dark:bg-[#111827]/74">
+            <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[15rem_minmax(0,1fr)] lg:px-8 lg:py-16">
+                <aside class="hidden lg:block">
+                    <nav aria-label="On this page" class="sticky top-24 rounded-lg border border-line bg-white p-3 text-sm shadow-sm dark:border-white/10 dark:bg-white/[0.05]">
+                        <p class="px-3 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted dark:text-slate-400">Contents</p>
+                        <a href="#1-guidelines" class="block rounded-md px-3 py-2 font-medium text-muted transition hover:bg-slate-100 hover:text-ink dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white">1. Guidelines</a>
+                        <a href="#2-Results" class="block rounded-md px-3 py-2 font-medium text-muted transition hover:bg-slate-100 hover:text-ink dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white">2. Results</a>
+                        <a href="#3-IterativeRefinement" class="block rounded-md px-3 py-2 font-medium text-muted transition hover:bg-slate-100 hover:text-ink dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white">3. Iterative Refinement</a>
+                        <a href="#4-Data_Set" class="block rounded-md px-3 py-2 font-medium text-muted transition hover:bg-slate-100 hover:text-ink dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white">4. Data Set</a>
+                    </nav>
+                </aside>
+
+                <div class="space-y-12">
+                    <section id="1-guidelines" class="scroll-mt-24">
+                        <div class="mb-5 flex items-end justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Prompt Design</p>
+                                <h2 class="mt-2 text-3xl font-semibold tracking-tight text-ink dark:text-white">1. Guidelines</h2>
+                            </div>
+                            <a href="#1-guidelines" class="rounded-md px-2 py-1 text-sm text-muted hover:bg-slate-100 hover:text-accent dark:text-slate-400 dark:hover:bg-white/10">#</a>
+                        </div>
+                        <p class="mb-6 max-w-3xl leading-7 text-muted dark:text-slate-300">
+                            Below is the guideline-enhanced prompt used in the article. It focuses on syntax, platform discrepancies, environment setup, and workflow logic.
+                        </p>
+                        <div class="overflow-hidden rounded-lg border border-slate-800 bg-[#101824] shadow-sm">
+                            <div class="flex items-center justify-between border-b border-white/10 px-4 py-3">
+                                <span class="text-sm font-medium text-slate-300">guidelines.yaml</span>
+                                <button class="copy-button rounded-md p-2 text-slate-300 transition hover:bg-white/10 hover:text-white" data-copy-target="guidelines-code" type="button" aria-label="Copy guidelines">
+                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 8h10.5A1.5 1.5 0 0 1 20 9.5V20a1.5 1.5 0 0 1-1.5 1.5H8A1.5 1.5 0 0 1 6.5 20V9.5A1.5 1.5 0 0 1 8 8Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16V5.5A1.5 1.5 0 0 1 5.5 4H16" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <pre class="code-block overflow-x-auto p-5 text-sm leading-6 text-slate-100" tabindex="0"><code id="guidelines-code">- Syntax:
+    - Ensure YAML file follows proper syntax, including required symbols, e.g., colons, hyphens, or quotation marks.
+    - Verify that GitHub Actions YAML file follows proper indentation and structural conventions.
+    - Ensure all used definitions are correctly defined and properly placed.
+    - Ensure the value types match their expected format when such fields exist in the source configuration, e.g., the setup-python action expects a single version value, not a list.
+
+- Platform Discrepancy:
+    - Translate Travis CI keys only when a clear, direct GitHub Actions equivalent exists. Skip any Travis CI-specific or unsupported keys.
+    - Verify that all expressions are properly converted to GitHub Actions syntax, e.g., 'env: TOX_ENV=flake8' to 'TOX_ENV: flake8'.
+    - Retain only x64 and arm64 if architectures are explicitly defined; remove all other architectures.
+    - Ensure all version numbers are in string format, e.g., Python '3.10'.
+    - Explicitly configure fields that are implicitly defaulted in Travis CI as equivalent GitHub Actions steps, e.g., actions/checkout@v4 and language runtime setup.
+    - Ensure all packages are properly installed and configured when present in the Travis CI configuration, e.g., migrate tox-travis to tox-gh-actions if applicable.
+
+- Environment:
+    - Ensure all referenced GitHub Actions currently exist; avoid non-existent actions.
+    - Ensure all required tokens are properly configured for the migrated steps, e.g., set GITHUB_TOKEN in the coveralls step if such a step exists.
+
+- Logic:
+    - Ensure all trigger events are correctly translated, e.g., avoid using tags as the sole trigger event unless the Travis CI configuration explicitly relies on tag-only builds.
+    - Ensure all execution orders are correctly translated, e.g., deploy job should be configured with the needs parameter to execute after test job.
+    - Ensure conditional statements are correctly translated.
+    - Do not introduce extra jobs, steps, operating systems, or matrix dimensions beyond those implied by the Travis CI configuration, except where required to faithfully reproduce Travis CI default behavior.
+    - Ensure that all transferable steps have been migrated.</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="2-Results" class="scroll-mt-24">
+                        <div class="mb-5 flex items-end justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Evaluation</p>
+                                <h2 class="mt-2 text-3xl font-semibold tracking-tight text-ink dark:text-white">2. Results</h2>
+                            </div>
+                            <a href="#2-Results" class="rounded-md px-2 py-1 text-sm text-muted hover:bg-slate-100 hover:text-accent dark:text-slate-400 dark:hover:bg-white/10">#</a>
+                        </div>
+                        <div class="overflow-hidden rounded-lg border border-line bg-white shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-line text-left text-sm dark:divide-white/10">
+                                    <thead class="bg-slate-50 text-xs uppercase tracking-wide text-muted dark:bg-white/[0.04] dark:text-slate-400">
+                                        <tr>
+                                            <th class="px-5 py-4 font-semibold">Metric</th>
+                                            <th class="px-5 py-4 font-semibold">Importer</th>
+                                            <th class="px-5 py-4 font-semibold">Basic</th>
+                                            <th class="px-5 py-4 font-semibold">One-shot</th>
+                                            <th class="px-5 py-4 font-semibold">Guideline</th>
+                                            <th class="px-5 py-4 font-semibold">IR</th>
+                                            <th class="px-5 py-4 font-semibold">Guideline + IR</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-line dark:divide-white/10">
+                                        <tr class="transition hover:bg-slate-50 dark:hover:bg-white/[0.04]">
+                                            <th class="px-5 py-4 font-semibold text-ink dark:text-white">BSR</th>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">31.5%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">63.0%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">57.0%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">71.5%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">83.5%</td>
+                                            <td class="px-5 py-4 font-semibold text-accent">88.5%</td>
+                                        </tr>
+                                        <tr class="transition hover:bg-slate-50 dark:hover:bg-white/[0.04]">
+                                            <th class="px-5 py-4 font-semibold text-ink dark:text-white">LMR</th>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">92.5%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">96.0%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">95.6%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">95.8%</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">96.5%</td>
+                                            <td class="px-5 py-4 font-semibold text-accent">97.2%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </div>
+                    </section>
+
+                    <section id="3-IterativeRefinement" class="scroll-mt-24">
+                        <div class="mb-5 flex items-end justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Ablation</p>
+                                <h2 class="mt-2 text-3xl font-semibold tracking-tight text-ink dark:text-white">3. Iterative Refinement</h2>
+                            </div>
+                            <a href="#3-IterativeRefinement" class="rounded-md px-2 py-1 text-sm text-muted hover:bg-slate-100 hover:text-accent dark:text-slate-400 dark:hover:bg-white/10">#</a>
+                        </div>
+                        <div class="overflow-hidden rounded-lg border border-line bg-white shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-line text-left text-sm dark:divide-white/10">
+                                    <thead class="bg-slate-50 text-xs uppercase tracking-wide text-muted dark:bg-white/[0.04] dark:text-slate-400">
+                                        <tr>
+                                            <th class="px-5 py-4 font-semibold">Strategies</th>
+                                            <th class="px-5 py-4 font-semibold">0</th>
+                                            <th class="px-5 py-4 font-semibold">1</th>
+                                            <th class="px-5 py-4 font-semibold">2</th>
+                                            <th class="px-5 py-4 font-semibold">3</th>
+                                            <th class="px-5 py-4 font-semibold">4</th>
+                                            <th class="px-5 py-4 font-semibold">5</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-line dark:divide-white/10">
+                                        <tr class="transition hover:bg-slate-50 dark:hover:bg-white/[0.04]">
+                                            <th class="px-5 py-4 font-semibold text-ink dark:text-white">IR</th>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">126</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">155</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">164</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">167</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">167</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">167</td>
+                                        </tr>
+                                        <tr class="transition hover:bg-slate-50 dark:hover:bg-white/[0.04]">
+                                            <th class="px-5 py-4 font-semibold text-ink dark:text-white">Guideline + IR</th>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">143</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">165</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">170</td>
+                                            <td class="px-5 py-4 text-muted dark:text-slate-300">176</td>
+                                            <td class="px-5 py-4 font-semibold text-accent">177</td>
+                                            <td class="px-5 py-4 font-semibold text-accent">177</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="4-Data_Set" class="scroll-mt-24">
+                        <div class="rounded-lg border border-line bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-8">
+                            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Resources</p>
+                            <h2 class="mt-2 text-3xl font-semibold tracking-tight text-ink dark:text-white">4. Data Set</h2>
+                            <p class="mt-4 max-w-3xl leading-7 text-muted dark:text-slate-300">
+                                The dataset comprises 200 GitHub repositories. The source code is publicly available through the anonymized repository below.
+                            </p>
+                            <a href="https://anonymous.4open.science/r/citranslation-4BC1" target="_blank" rel="noreferrer" class="mt-6 inline-flex items-center rounded-md bg-coral px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#d95f42]">
+                                Visit citranslation
+                            </a>
+                        </div>
+                    </section>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+
     <script>
-        const themeButton = document.querySelector('#radix-\\:R1b6cq\\:'); // 
+        document.getElementById('theme-toggle').addEventListener('click', function () {
+            var root = document.documentElement;
+            var isDark = root.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
 
-        themeButton.addEventListener('click', () => {
-            const d = document.documentElement;
-            const c = d.classList;
-
-            if (c.contains('dark')) {
-                // dark to light
-                c.remove('dark');
-                c.add('light');
-                d.style.colorScheme = 'light';
-                localStorage.setItem('theme', 'light');
-            } else {
-                // light to dark
-                c.remove('light');
-                c.add('dark');
-                d.style.colorScheme = 'dark';
-                localStorage.setItem('theme', 'dark');
-            }
+        document.querySelectorAll('.copy-button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var target = document.getElementById(button.dataset.copyTarget);
+                if (!target) return;
+                navigator.clipboard.writeText(target.textContent || '').then(function () {
+                    var original = button.innerHTML;
+                    button.textContent = 'Copied';
+                    button.classList.add('text-white');
+                    window.setTimeout(function () {
+                        button.innerHTML = original;
+                        button.classList.remove('text-white');
+                    }, 1200);
+                });
+            });
         });
     </script>
-
 </body>
 
 </html>
